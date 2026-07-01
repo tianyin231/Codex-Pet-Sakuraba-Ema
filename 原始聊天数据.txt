@@ -1,0 +1,476 @@
+0. 通用规则
+后续所有生图都遵守：
+上传图像：
+1. 原立绘
+2. 已生成并确认过的 base 基准图
+3. 如果有 layout guide，就也上传对应状态的 layout guide
+例外：
+生成 base 基准图时，只上传原立绘。
+生成其他状态行时，上传原立绘 + base 基准图。
+提示词组合规则：
+基准图 = 全局身份锁定 + 基准图提示词
+状态行 = 全局身份锁定 + 全局格式约束 + 对应状态提示词
+1. 生成 base 基准图
+上传：
+只上传：原立绘
+提示词：
+Use the provided original character reference image as the only source of truth for the character identity.
+Do not redesign the character.
+Keep the exact same face, hairstyle, outfit, color palette, body proportions, silhouette, accessories, art style, line quality, and material feeling.
+The result must look like the same character from the reference image, only adapted into a clean Codex pet sprite.
+
+Create a single full-body canonical base sprite of the character.
+The character should stand in a neutral relaxed pose, facing slightly forward.
+Keep the design extremely faithful to the reference image.
+Use a clean compact silhouette that remains readable at small pet size.
+Use a flat solid chroma-key background only.
+No animation frames, no extra poses, no effects, no shadows, no scenery, no text, no UI.
+2. 生成 idle 静止行
+上传：
+1. 原立绘
+2. base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+Do not redesign the character.
+Keep the exact same face, hairstyle, outfit, color palette, body proportions, silhouette, accessories, art style, line quality, and material feeling.
+The result must look like the same character from the reference images, only animated into sprite frames.
+
+Create one horizontal sprite animation row for a Codex pet.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories that are not in the reference image.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: idle.
+Create 6 frames in one horizontal row.
+The character stays calm and mostly still.
+Show only subtle breathing, a tiny blink, or a very small head/body bob.
+The motion should be visible but minimal.
+Do not show waving, walking, running, jumping, working, reviewing, or emotional reaction.
+No new props, no effects, no symbols.
+3. 生成 running-right 向右移动行
+上传：
+1. 原立绘
+2. base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+Do not redesign the character.
+Keep the exact same face, hairstyle, outfit, color palette, body proportions, silhouette, accessories, art style, line quality, and material feeling.
+The result must look like the same character from the reference images, only animated into sprite frames.
+
+Create one horizontal sprite animation row for a Codex pet.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories that are not in the reference image.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: running-right.
+Create 8 frames in one horizontal row.
+The character faces and moves toward the right.
+Show directional movement through body pose, limbs, clothing, hair, and existing accessories only.
+Use a clear alternating movement cadence across frames.
+Do not use speed lines, motion trails, dust, blur, shadows, floor marks, or detached effects.
+4. 生成 running-left 向左移动行
+优先判断：
+如果角色没有明显左右不对称特征，可以直接把 running-right 镜像生成 running-left。
+如果角色有单边发饰、单边武器、单边衣服图案、特殊刘海方向，就单独生成 running-left。
+单独生成时上传：
+1. 原立绘
+2. base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+Do not redesign the character.
+Keep the exact same face, hairstyle, outfit, color palette, body proportions, silhouette, accessories, art style, line quality, and material feeling.
+The result must look like the same character from the reference images, only animated into sprite frames.
+
+Create one horizontal sprite animation row for a Codex pet.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories that are not in the reference image.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: running-left.
+Create 8 frames in one horizontal row.
+The character faces and moves toward the left.
+Show directional movement through body pose, limbs, clothing, hair, and existing accessories only.
+Use a clear alternating movement cadence across frames.
+Do not use speed lines, motion trails, dust, blur, shadows, floor marks, or detached effects.
+Preserve the same character identity even if the reference has asymmetric details.
+5. 生成 waving 挥手行
+上传：
+1. 原立绘
+2. base 基准图
+提示词组合：
+全局身份锁定
++
+全局格式约束
++
+waving 状态提示词
+状态提示词：
+State: waving.
+Create 6 frames in one horizontal row.
+The character waves using an existing visible hand, arm, sleeve, paw, or limb.
+The greeting must be readable through the pose only.
+Do not add wave marks, motion arcs, sparkles, symbols, floating effects, text, or new props.
+Keep the body mostly stable while the waving limb changes pose.
+6. 生成 jumping 跳跃行
+上传：
+1. 原立绘
+2. base 基准图
+状态提示词：
+State: jumping.
+Create 6 frames in one horizontal row.
+Show a vertical jump using body position and pose changes only.
+Include a natural sequence: slight crouch, lift-off, airborne pose, descent, and recovery.
+Do not add floor, shadow, dust, landing marks, impact effects, bounce pads, motion trails, or detached effects.
+7. 生成 failed 失败行
+上传：
+1. 原立绘
+2. base 基准图
+状态提示词：
+State: failed.
+Create 6 frames in one horizontal row.
+Show a small failed or disappointed reaction while keeping the same character identity.
+Use facial expression, lowered head, slumped posture, or small attached opaque effects only if needed.
+Any effect must touch or overlap the character silhouette.
+Do not add red X marks, floating symbols, detached smoke, detached stars, separate tear drops, text, UI, or new props.
+8. 生成 waiting 等待行
+上传：
+1. 原立绘
+2. base 基准图
+状态提示词：
+State: waiting.
+Create 6 frames in one horizontal row.
+Show the character waiting for user input or approval.
+Use an expectant asking pose, attentive posture, slight lean, raised hand, or curious expression.
+This must look different from idle and review.
+Do not add question marks, speech bubbles, UI panels, text, symbols, or new props.
+9. 生成 running 工作中行
+上传：
+1. 原立绘
+2. base 基准图
+注意这个不是移动跑步。
+状态提示词：
+State: running.
+Create 6 frames in one horizontal row.
+Show the character actively working, processing, thinking, scanning, or focusing on a task.
+This is not directional travel.
+Do not show literal jogging, sprinting, raised-knee running, treadmill motion, or side-to-side movement.
+Use posture, expression, small hand movement, existing accessories, or focused body motion.
+No speed lines, dust, motion trails, UI, text, or new props.
+10. 生成 review 审阅行
+上传：
+1. 原立绘
+2. base 基准图
+状态提示词：
+State: review.
+Create 6 frames in one horizontal row.
+Show careful reviewing or focused inspection.
+Use a slight lean, blink, focused eyes, head tilt, hand position, or attentive posture.
+Do not add magnifying glasses, papers, code, UI, punctuation, symbols, text, or new props unless they already exist in the original reference design.
+最简单执行顺序：
+1. 原立绘 -> 生成 base
+2. 原立绘 + base -> idle
+3. 原立绘 + base -> running-right
+4. running-right 可镜像就镜像成 running-left，否则单独生成 running-left
+5. 原立绘 + base -> waving
+6. 原立绘 + base -> jumping
+7. 原立绘 + base -> failed
+8. 原立绘 + base -> waiting
+9. 原立绘 + base -> running
+10. 原立绘 + base -> review
+要点：base 是后面所有图的一致性锚点。每行只生成一条，不要一次生成整张 atlas。
+
+星期二21:55
+
+
+
+
+
+
+再来加一层约束，生成可爱的q版形象，并且一次性给出每一阶段的提示词
+
+
+
+
+星期二21:57
+
+
+
+
+
+
+可以。这里加一层核心约束：不是随便改成 Q 版，而是“在保留原角色身份的前提下，转成可爱的 Q 版 Codex pet”。
+下面每一阶段都给你完整提示词，直接复制用。
+阶段 1：生成 Base 基准图
+上传：
+原立绘
+提示词：
+Use the provided original character reference image as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet version of this character.
+Do not create a different character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, and overall personality from the reference image.
+Convert the character into a compact, adorable chibi sprite with a larger head, smaller body, soft proportions, and a friendly pet-like appearance.
+
+Create a single full-body canonical base sprite.
+The character should stand in a neutral relaxed pose, facing slightly forward.
+The design must be clean, cute, readable at small size, and faithful to the original reference.
+Use the same art style direction as the reference, but simplified into a polished chibi sprite.
+
+Use a flat solid chroma-key background only.
+No animation frames.
+No extra poses.
+No scenery.
+No floor.
+No shadows.
+No glow.
+No text.
+No UI.
+No symbols.
+No new props.
+阶段 2：idle 静止行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: idle.
+Create 6 frames in one horizontal row.
+The character stays calm, cute, and mostly still.
+Show only subtle breathing, a tiny blink, or a very small head/body bob.
+The motion should be visible but minimal.
+Do not show waving, walking, running, jumping, working, reviewing, or emotional reaction.
+No effects, no symbols, no new props.
+阶段 3：running-right 向右移动行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: running-right.
+Create 8 frames in one horizontal row.
+The character faces and moves toward the right.
+Show cute chibi directional movement through body pose, short limbs, clothing, hair, and existing accessories only.
+Use a clear alternating movement cadence across frames.
+The movement should feel lively and adorable, but still clean and readable.
+Do not use speed lines, motion trails, dust, blur, shadows, floor marks, or detached effects.
+阶段 4：running-left 向左移动行
+如果左右镜像不会破坏角色特征，可以镜像 running-right。否则上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: running-left.
+Create 8 frames in one horizontal row.
+The character faces and moves toward the left.
+Show cute chibi directional movement through body pose, short limbs, clothing, hair, and existing accessories only.
+Use a clear alternating movement cadence across frames.
+Preserve the same character identity even if the reference has asymmetric details.
+Do not use speed lines, motion trails, dust, blur, shadows, floor marks, or detached effects.
+阶段 5：waving 挥手行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: waving.
+Create 6 frames in one horizontal row.
+The character waves in a cute and friendly way using an existing visible hand, arm, sleeve, paw, or limb.
+The greeting must be readable through the pose only.
+Keep the body mostly stable while the waving limb changes pose.
+Do not add wave marks, motion arcs, sparkles, symbols, floating effects, text, or new props.
+阶段 6：jumping 跳跃行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: jumping.
+Create 6 frames in one horizontal row.
+Show a cute vertical jump using body position and pose changes only.
+Include a natural sequence: slight crouch, lift-off, airborne pose, descent, and recovery.
+The jump should feel light, adorable, and readable.
+Do not add floor, shadow, dust, landing marks, impact effects, bounce pads, motion trails, or detached effects.
+阶段 7：failed 失败行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: failed.
+Create 6 frames in one horizontal row.
+Show a small cute failed or disappointed reaction while keeping the same character identity.
+Use facial expression, lowered head, slumped posture, tiny body language, or small attached opaque effects only if needed.
+Any effect must touch or overlap the character silhouette.
+Do not make the character look injured, scary, or like a different character.
+Do not add red X marks, floating symbols, detached smoke, detached stars, separate tear drops, text, UI, or new props.
+阶段 8：waiting 等待行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: waiting.
+Create 6 frames in one horizontal row.
+Show the character waiting for user input or approval in a cute expectant way.
+Use an attentive posture, slight lean, raised hand, curious expression, or gentle asking pose.
+This must look different from idle and review.
+Do not add question marks, speech bubbles, UI panels, text, symbols, or new props.
+阶段 9：running 工作中行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: running.
+Create 6 frames in one horizontal row.
+Show the character actively working, processing, thinking, scanning, or focusing on a task in a cute chibi way.
+This is not directional travel.
+Do not show literal jogging, sprinting, raised-knee running, treadmill motion, or side-to-side movement.
+Use posture, expression, small hand movement, existing accessories, or focused body motion.
+No speed lines, dust, motion trails, UI, text, symbols, or new props.
+阶段 10：review 审阅行
+上传：
+原立绘
+Base 基准图
+提示词：
+Use the provided original character reference image and canonical base sprite as the only source of truth for the character identity.
+
+Create a cute chibi / super-deformed Codex pet sprite animation row.
+Do not redesign the character.
+Keep the same recognizable face, hairstyle, outfit, color palette, accessories, key silhouette, chibi proportions, and art style from the canonical base sprite.
+The result must look like the exact same chibi character, only animated.
+
+Create one horizontal sprite animation row.
+Each frame must show the full body character, centered, with stable size and consistent proportions.
+Use a flat solid chroma-key background only.
+No scenery, no floor, no cast shadow, no drop shadow, no glow, no text, no logo, no UI, no symbols, no speech bubble, no frame numbers, no guide marks.
+Do not add new props or accessories.
+Frames must be clearly separated, not overlapping, and the character must not be cropped.
+
+State: review.
+Create 6 frames in one horizontal row.
+Show careful reviewing or focused inspection in a cute chibi way.
+Use a slight lean, blink, focused eyes, head tilt, hand position, or attentive posture.
+The character should look concentrated but still adorable.
+Do not add magnifying glasses, papers, code, UI, punctuation, symbols, text, or new props unless they already exist in the original reference design.
+最简单顺序就是：
+原立绘 -> Base
+原立绘 + Base -> idle
+原立绘 + Base -> running-right
+running-right 可镜像 -> running-left
+原立绘 + Base -> waving
+原立绘 + Base -> jumping
+原立绘 + Base -> failed
+原立绘 + Base -> waiting
+原立绘 + Base -> running
+原立绘 + Base -> review
+核心约束一句话：Q 版只改变比例和可爱度，不改变角色身份。
